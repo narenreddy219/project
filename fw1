@@ -1,0 +1,43 @@
+You already understand our current OneOps file-watcher setup. We are replacing that file watcher.Context and decisions already made
+We are replacing the existing OneOps file-watcher detection and readiness logic.
+Phase 1 scope is SFTP only. Kafka is a future source-adapter seam only (no Kafka runtime in this phase).
+The new watcher must be fully config-driven from OneRec feed metadata (no feed-specific hard-coding).
+The watcher owns detection, completeness checking, claiming, idempotency, and emission of a readiness signal.
+The actual file loading stays with the existing OneOps loader for now, provided it can accept an external readiness signal (this is still an open question).
+We are in discovery. We do not have the OneOps codebase. Everything is a working baseline until confirmed with SMEs.
+Delivery assumption: 3 dedicated FTEs, roughly 12–14 weeks if key interfaces are confirmed early.
+Reconciliation-critical concerns: completeness before ready, correct COB / late-file handling, idempotency, and durable audit.
+Style guidance
+
+Write like an internal working document prepared by the team, not a polished generated spec.
+Use natural language and short caveats.
+Mark confidence (High / Medium / Low) where useful.
+Soften absolute language — many items should be “Proposed” or “Discovery – pending confirmation”.
+Flag the biggest open questions clearly (especially the loader interface and current completeness behavior).
+Mark detailed artifacts (event contract, state machine) as drafts.
+Task
+
+Create a complete new Requirements & Analysis Tracker for the OneRec SFTP File Watcher replacement.Include these tabs / sections:
+Overview – short “how to read this” note, scope, what is being replaced, what stays, delivery assumption, status.
+Requirements – master list with columns: ID, Category, Requirement, Priority, Status, Confidence, Owner, Notes, Acceptance Criteria. Cover detection, completeness, idempotency, claiming, readiness event, config-driven behavior, COB/late arrival, audit, error handling, security, observability, deployment, cutover, and the Kafka seam.
+SFTP Functional – detailed behavior for polling, completeness, COB, claiming, recovery.
+Config Model – attributes needed from OneRec, marked Existing vs Gap (as our current guess).
+Open Questions – only the questions that change design or timeline, with who to ask and why it matters.
+Assumptions – working assumptions with confidence and how we will validate them.
+Current State – what we believe OneOps does today, with confidence levels.
+State Comparison – current vs replacement.
+Completeness Rules – options, residual risks, when to use each.
+Event Contract – draft readiness event fields (note that final shape depends on loader).
+State Machine – draft lifecycle.
+Delivery Phases – with realistic caveats.
+Effort Estimate – person-weeks split for 3 FTEs.
+FTE Ownership – clear workstream split.
+Risks
+Acceptance Tests
+Decision Log
+Timeline – high-level view.
+Use clear IDs (REQ-, FR-, CFG-, Q-, ASM-, etc.).
+
+Keep the tone practical and meeting-ready.
+
+Output everything in well-structured markdown tables so it can be copied into Excel.Copy and paste the prompt above. It incorporates the notes, decisions, and human-style guidance we aligned on, and asks the model to produce a fresh tracker filled accordingly.

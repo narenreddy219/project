@@ -1,0 +1,76 @@
+Act as a Senior OneRec Reconciliation Metadata Diagnostic Engineer.
+
+We are building an agentic OneRec Metadata Resolver using the existing SQL debugger scripts in the `component_debuggers` directory.
+
+**Objective**
+
+Investigate OneRec reconciliation incidents, identify metadata configuration mismatches, and recommend evidence-backed corrections using approved working XML configurations and read-only SQL results.
+
+**Step 1 — Discover existing SQL scripts**
+
+1. Inspect every `.sql` file in `component_debuggers`.
+2. Identify which SQL scripts investigate Merger, CPP, Launcher, Scheduler, ReconEngine, EZ Engine, metadata and audit information.
+3. Extract the tables, joins, parameters, filters and diagnostic purpose of each query.
+4. Create a SQL diagnostic catalog mapping incident symptoms to appropriate SQL scripts.
+5. Do not invent Oracle tables, columns or relationships.
+
+**Step 2 — Create the agentic investigation workflow**
+
+Create `.github/agents/onerec-resolver.agent.md` and `.github/skills/onerec-metadata-resolver/SKILL.md`.
+
+The agent must:
+
+1. Accept recon ID, feed ID, environment, COB date and observed error.
+2. Identify the affected OneRec component.
+3. Select the relevant existing SQL debugger scripts.
+4. Prepare read-only diagnostic queries using validated parameters.
+5. Analyze the supplied SQL results.
+6. Load the current XML metadata configuration.
+7. Identify an explicitly approved working XML baseline.
+8. Compare current and baseline configurations, including relevant feed types and reconciliation settings.
+9. Correlate metadata differences with audit results and incident symptoms.
+10. Distinguish confirmed defects from suspected causes.
+11. Recommend a proposed XML metadata correction.
+12. Generate an RCA report with supporting evidence, confidence level and validation steps.
+
+**Step 3 — Support four reconciliation configurations**
+
+- File vs File
+- File vs Olympus
+- Olympus vs File
+- Olympus vs Olympus
+
+Use these as existing configuration categories. Do not assume they are interchangeable or that a working configuration from another category is a valid baseline.
+
+**Step 4 — Implement safety controls**
+
+- Read-only investigation only.
+- Never execute INSERT, UPDATE, DELETE, MERGE, DDL or stored procedures.
+- Never execute SQL automatically without approved access and explicit authorization.
+- Never modify current XML files.
+- Never assume a baseline difference is automatically a defect.
+- Never recommend copying unrelated recon-specific values from another configuration.
+- Require human approval for every proposed correction.
+- Do not connect to production or upload confidential data to unapproved services.
+
+**Step 5 — Produce the investigation output**
+
+For every incident, generate:
+
+- Incident and reconciliation details
+- Affected component
+- SQL scripts selected and why
+- SQL evidence and audit findings
+- Current versus baseline XML differences
+- Root cause and confidence
+- Proposed metadata correction
+- Required validation and regression tests
+- Approval status
+
+**Implementation instruction**
+
+First inspect the actual repository and provide an implementation plan. Then create the agent and skill files. Reuse existing SQL files without changing their logic.
+
+Do not introduce MCP, external AI services, or production database connections.
+
+The objective is a reusable agentic OneRec metadata investigation workflow, not a one-off SQL analysis.
